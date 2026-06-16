@@ -5,8 +5,8 @@ Shows your connected Wi-Fi network name, password and security info.
 
 ## Kullanım / Usage
 
-PowerShell'i **yönetici olarak** aç ve yapıştır:  
-Open PowerShell **as Administrator** and paste:
+PowerShell'i aç ve yapıştır:  
+Open PowerShell and paste:
 
 ```powershell
 irm bit.ly/wifipassps1 | iex
@@ -31,12 +31,9 @@ Language prompt appears → `1` Turkish, `2` English.
   Sifre     : gizlisifre123
   Guvenlik  : WPA2-Personal
   Sinyal    : 78%
-
-  NOT: Sifre icin PowerShell'i yonetici olarak acin.
 ```
 
 ## Gereksinimler / Requirements
 
 - Windows 10 / 11
 - PowerShell 5.1+
-- Yönetici yetkisi / Administrator privileges (şifre için / for password)
