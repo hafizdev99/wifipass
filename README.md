@@ -9,7 +9,7 @@ PowerShell'i **yönetici olarak** aç ve yapıştır:
 Open PowerShell **as Administrator** and paste:
 
 ```powershell
-irm is.gd/wifipass | iex
+irm bit.ly/wifipassps1 | iex
 ```
 
 Dil seçeneği çıkar → `1` Türkçe, `2` İngilizce.  
