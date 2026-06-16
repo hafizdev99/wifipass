@@ -1,5 +1,5 @@
 # password.ps1 — Wi-Fi bilgi komutu (TR/EN)
-# Kullanim: irm is.gd/wifipass | iex
+# Kullanim: irm bit.ly/wifipassps1 | iex
 
 Write-Host ""
 Write-Host "  Dil secin / Choose language:" -ForegroundColor Cyan
@@ -9,24 +9,22 @@ Write-Host ""
 $sec = Read-Host "  >> "
 
 $tr = @{
-    title    = "Wi-Fi Bilgileri"
-    name     = "Ag adi    "
-    pass     = "Sifre     "
-    sec      = "Guvenlik  "
-    sig      = "Sinyal    "
-    notconn  = "Hicbir Wi-Fi agina baglanilmadi."
-    nopass   = "(sifre alinamadi - yonetici olarak calistirin)"
-    adminwarn= "NOT: Sifre icin PowerShell'i yonetici olarak acin."
+    title   = "Wi-Fi Bilgileri"
+    name    = "Ag adi   "
+    pass    = "Sifre    "
+    sec     = "Guvenlik "
+    sig     = "Sinyal   "
+    notconn = "Hicbir Wi-Fi agina baglanilmadi."
+    nopass  = "(sifre alinamadi)"
 }
 $en = @{
-    title    = "Wi-Fi Information"
-    name     = "Network   "
-    pass     = "Password  "
-    sec      = "Security  "
-    sig      = "Signal    "
-    notconn  = "Not connected to any Wi-Fi network."
-    nopass   = "(could not retrieve - run as Administrator)"
-    adminwarn= "NOTE: Run PowerShell as Administrator to see the password."
+    title   = "Wi-Fi Information"
+    name    = "Network  "
+    pass    = "Password "
+    sec     = "Security "
+    sig     = "Signal   "
+    notconn = "Not connected to any Wi-Fi network."
+    nopass  = "(could not retrieve password)"
 }
 
 $L = if ($sec -eq "2") { $en } else { $tr }
@@ -57,6 +55,4 @@ Write-Host "  $($L.name) : $ssid"              -ForegroundColor Yellow
 Write-Host "  $($L.pass) : $pwd"               -ForegroundColor Green
 Write-Host "  $($L.sec)  : $auth"
 Write-Host "  $($L.sig)  : $signal"
-Write-Host ""
-Write-Host "  $($L.adminwarn)"                 -ForegroundColor DarkYellow
 Write-Host ""
