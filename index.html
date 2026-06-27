@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wifipass</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #2563eb;
+    --green: #16a34a;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 4rem 1.5rem; }
+
+  .header { display: flex; align-items: center; gap: 14px; margin-bottom: 2.5rem; }
+  .logo { width: 48px; height: 48px; }
+  .logo-text h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+  .logo-text p { font-size: 13px; color: var(--muted); }
+
+  .terminal { background: #1e1e2e; border-radius: 10px; overflow: hidden; margin-bottom: 2.5rem; border: 1px solid #2a2a3e; }
+  .tbar { background: #16161e; padding: 10px 14px; display: flex; gap: 6px; align-items: center; border-bottom: 1px solid #2a2a3e; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r{background:#ff5f57}.dot.y{background:#ffbd2e}.dot.g{background:#28ca41}
+  .tbar span { font-size: 12px; color: #4a4a6a; font-family: var(--mono); margin-left: 6px; }
+  .tbody { padding: 1.25rem 1.5rem; font-family: var(--mono); font-size: 13px; line-height: 2; }
+  .p{color:#7c3aed}.c{color:#e2e8f0}.k{color:#f59e0b}.v{color:#22c55e}.m{color:#64748b}
+
+  .download-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+  .download-card h2 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .download-card p { font-size: 13px; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.15s; border: none; font-family: var(--sans); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .steps { counter-reset: step; margin-bottom: 2rem; }
+  .step { display: flex; gap: 12px; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .step:last-child { border-bottom: none; }
+  .step-n { width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-body h3 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .step-body p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  code { font-family: var(--mono); font-size: 12px; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: var(--accent); }
+
+  .copy-row { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border-radius: 8px; padding: 10px 14px; margin-top: 10px; }
+  .copy-row span { font-family: var(--mono); font-size: 12px; color: var(--accent); flex: 1; }
+  .copy-btn { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 4px 12px; font-size: 12px; cursor: pointer; font-family: var(--sans); color: var(--text); }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer { text-align: center; font-size: 12px; color: var(--muted); margin-top: 2.5rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  .section-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="14" fill="#1e3a8a"/>
+      <path d="M32 18C23.163 18 15.197 21.582 9.4 27.4L13.8 31.8C18.4 27.134 24.866 24.4 32 24.4C39.134 24.4 45.6 27.134 50.2 31.8L54.6 27.4C48.803 21.582 40.837 18 32 18Z" fill="white" opacity="0.9"/>
+      <path d="M32 29C25.8 29 20.2 31.6 16.134 35.8L20.534 40.2C23.4 37.2 27.466 35.4 32 35.4C36.534 35.4 40.6 37.2 43.466 40.2L47.866 35.8C43.8 31.6 38.2 29 32 29Z" fill="white" opacity="0.7"/>
+      <circle cx="32" cy="50" r="5" fill="white"/>
+    </svg>
+    <div class="logo-text">
+      <h1>wifipass</h1>
+      <p>View your Wi-Fi details from the terminal</p>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div class="terminal">
+    <div class="tbar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span>PowerShell</span>
+    </div>
+    <div class="tbody">
+      <div><span class="p">PS ❯ </span><span class="c">wifipass</span></div>
+      <div>&nbsp;</div>
+      <div><span class="c">  Choose language:</span></div>
+      <div><span class="c">    [1] Turkish &nbsp; [2] English</span></div>
+      <div><span class="p">  ❯ </span><span class="v">2</span></div>
+      <div>&nbsp;</div>
+      <div><span class="m">  ========================================</span></div>
+      <div><span class="k">    Wi-Fi Information</span></div>
+      <div><span class="m">  ========================================</span></div>
+      <div><span class="m">  Network &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span><span class="k">MyHomeNetwork</span></div>
+      <div><span class="m">  Password &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span><span class="v">mypassword123</span></div>
+      <div><span class="m">  Security &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span><span class="c">WPA2-Personal</span></div>
+      <div><span class="m">  Signal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span><span class="c">78%</span></div>
+      <div><span class="m">  Band &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span><span class="c">802.11ac</span></div>
+      <div><span class="m">  Channel &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span><span class="c">6</span></div>
+      <div><span class="m">  MAC Address &nbsp;&nbsp;: </span><span class="c">AA:BB:CC:DD:EE:FF</span></div>
+      <div><span class="m">  IP Address &nbsp;&nbsp;&nbsp;: </span><span class="c">192.168.1.105</span></div>
+      <div><span class="m">  Gateway &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span><span class="c">192.168.1.1</span></div>
+    </div>
+  </div>
+
+  <!-- Download -->
+  <div class="section-title">Install</div>
+  <div class="download-card">
+    <h2>Download the installer (.exe)</h2>
+    <p>The setup wizard automatically <strong>adds wifipass to PATH</strong> — after installation, just type <code>wifipass</code> in any terminal. Administrator privileges required.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="output/wifipass_setup.exe" download>⬇ wifipass_setup.exe</a>
+      <a class="btn btn-secondary" href="https://github.com/hafizdev99/wifipass" target="_blank">View on GitHub</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">Steps</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <h3>Download the installer</h3>
+        <p>Click the button above to download <code>wifipass_setup.exe</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <h3>Run the setup wizard</h3>
+        <p>Double-click the file. The "Add to PATH" option is checked by default — just click Next.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <h3>Open a new terminal</h3>
+        <p>Open a new PowerShell or CMD window and type <code>wifipass</code>. That's it.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-title">Use without installing</div>
+  <div class="copy-row">
+    <span id="cmd">irm bit.ly/wifipassps1 | iex</span>
+    <button class="copy-btn" onclick="cp()">Copy</button>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-top:8px;">Run in PowerShell (as Administrator).</p>
+
+  <footer>
+    <a href="https://github.com/hafizdev99/wifipass">github.com/hafizdev99/wifipass</a> · Windows 10/11 · PowerShell 5.1+
+  </footer>
+
+</div>
+<script>
+function cp() {
+  navigator.clipboard.writeText(document.getElementById('cmd').innerText);
+  const b = document.querySelector('.copy-btn');
+  b.textContent = 'Copied!';
+  setTimeout(() => b.textContent = 'Copy', 2000);
+}
+</script>
+</body>
+</html>
